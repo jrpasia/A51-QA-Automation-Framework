@@ -53,8 +53,10 @@ public class LoginTests extends BaseTest {
         WebElement loginButton = driver.findElement(By.cssSelector("[type='submit']"));
         loginButton.click();
 
-        //Assertion
+        //Expected Result
         WebElement userAvatar = driver.findElement(By.cssSelector("[class='avatar']"));
+
+        Assert.assertTrue(userAvatar.isDisplayed());
         // driver.quit();
     }
 }
