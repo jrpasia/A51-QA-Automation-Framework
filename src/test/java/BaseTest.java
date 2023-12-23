@@ -13,6 +13,7 @@ import java.time.Duration;
 public class BaseTest {
 
     public WebDriver driver = null;
+    public String url = "https://qa.koel.app/";
 
     @BeforeSuite
     static void setupClass() {
@@ -33,7 +34,7 @@ public class BaseTest {
 
 
     public void navigateToLoginPage(){
-        String url = "https://qa.koel.app/";
+
         driver.get(url);
     }
 

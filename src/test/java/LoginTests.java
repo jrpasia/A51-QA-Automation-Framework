@@ -12,17 +12,9 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void loginEmptyEmailPassword() {
-
-//      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        String url = "https://qa.koel.app/";
-        driver.get(url);
-        Assert.assertEquals(driver.getCurrentUrl(), url);
+      navigateToLoginPage();
+      clickLoginButton();
+      Assert.assertEquals(driver.getCurrentUrl(), url);
     }
 
     @Test
@@ -45,8 +37,30 @@ public class LoginTests extends BaseTest {
         provideEmail("john.pasia@testpro.io");
         providePassword("skljsdf");
         clickLoginButton();
-        WebElement homepageLogo = driver.findElement(By.cssSelector("[class='logo'] "));
-        Assert.assertTrue(homepageLogo.isDisplayed());
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+
+    }
+    @Test
+    public void loginInvalidEmail(){
+        navigateToLoginPage();
+        provideEmail("johnpasia@testpro.com");
+        providePassword("B3n@iah2013");
+        clickLoginButton();
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+    }
+    @Test
+    public void loginEmptyEmail(){
+        navigateToLoginPage();
+        providePassword("B3n@iah2013");
+        clickLoginButton();
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+    }
+    @Test
+    public void loginEmptyPassword(){
+        navigateToLoginPage();
+        provideEmail("johnpasia@testpro.com");
+        clickLoginButton();
+        Assert.assertEquals(driver.getCurrentUrl(), url);
 
     }
 }
