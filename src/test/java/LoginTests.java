@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class LoginTests extends BaseTest {
+
     @Test
     public void loginEmptyEmailPassword() {
 
@@ -26,37 +27,26 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void loginValidPassword(){
-        //pre-conditions
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        //Steps 1: Go to website
-        String url = "https://qa.koel.app/";
-        driver.get(url);
-
-        //Step 2: Find email text box
-        WebElement emailField = driver.findElement(By.cssSelector("[type='email']"));
-        emailField.click();
-        emailField.clear();
-        emailField.sendKeys("john.pasia@testpro.io");
-
-        //Step 3: Find password text box
-        WebElement passwordField = driver.findElement(By.cssSelector("[type='password']"));
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys("B3n@iah2013");
-
-        //Step 4: Find and click Login button
-        WebElement loginButton = driver.findElement(By.cssSelector("[type='submit']"));
-        loginButton.click();
-
-        //Expected Result
+        //Steps
+        navigateToLoginPage();
+        provideEmail("john.pasia@testpro.io");
+        providePassword("B3n@iah2013");
+        clickLoginButton();
         WebElement userAvatar = driver.findElement(By.cssSelector("[class='avatar']"));
 
+        //Expected Result
         Assert.assertTrue(userAvatar.isDisplayed());
-        // driver.quit();
+
+    }
+
+    @Test
+    public void loginInvalidPassword(){
+        navigateToLoginPage();
+        provideEmail("john.pasia@testpro.io");
+        providePassword("skljsdf");
+        clickLoginButton();
+        WebElement homepageLogo = driver.findElement(By.cssSelector("[class='logo'] "));
+        Assert.assertTrue(homepageLogo.isDisplayed());
+
     }
 }
